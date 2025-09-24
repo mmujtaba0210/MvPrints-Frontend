@@ -12,6 +12,8 @@ import Layout from "@/components/layouts/Layout";
 import Image from "next/image";
 import ProductCard from "@/components/ProductCard";
 import OptionsDialog from "@/components/OptionsDialog";
+import WhyChooseUs from "./WhyChooseUs";
+import YouMightAlsoLike from "./YouMightAlsoLike";
 
 const Products = ({ product: propProduct }) => {
   const [frontUploaded, setFrontUploaded] = useState(false);
@@ -567,6 +569,12 @@ const Products = ({ product: propProduct }) => {
           </div>
         </div>
       </div>
+      <section>
+        <WhyChooseUs />
+      </section>
+      <section>
+        <YouMightAlsoLike />
+      </section>
       {/* Promotion Banner section */}
       <section className="w-full mt-4">
         <Image
