@@ -1,7 +1,8 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import Image from "next/image";
 import HomePage from "@/views/Home";
-import Layout from '@/components/layouts/Layout';
+import Layout from "@/components/layouts/Layout";
+import { CartProvider } from "@/components/add-to-cart/components/CartContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,7 +17,9 @@ const geistMono = Geist_Mono({
 export default function Home() {
   return (
     <Layout>
-      <HomePage />
+      <CartProvider>
+        <HomePage />
+      </CartProvider>
     </Layout>
   );
 }

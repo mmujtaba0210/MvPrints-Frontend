@@ -6,7 +6,6 @@ const LandingPage = () => {
       className=" min-h-[100vh]  md:min-h-[80vh] xl:min-h-[110vh] bg-[url('/header/bg.png')]    bg-top bg-no-repeat  xl:rounded-br-[19rem] xl:rotate- overflow-hidden   relative
 "
     >
-      <HeaderSection />
       <main className="md:flex gap-8 h-full  items-center mx-auto max-w-[290px] sm:max-w-[540px] md:max-w-[668px] lg:max-w-[924px] xl:max-w-[1180px] 2xl:max-w-[1436px]">
         <section className="">
           <h1 className="text-3xl lg:text-5xl xl:text-7xl pt-40 2xl:pt-80 2xl:text-9xl">

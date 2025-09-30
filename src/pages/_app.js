@@ -1,7 +1,11 @@
 // filepath: c:\Users\Barely Works\Desktop\Mecarvi_Technology\mecarvi\src\pages\_app.js
-import '../styles/globals.css';
+import "../styles/globals.css";
 import { Geist, Geist_Mono } from "next/font/google";
-import { AuthProvider } from '@/context/AuthContext';
+
+import { CartProvider } from "@/components/add-to-cart/components/CartContext";
+import { Provider } from "react-redux";
+import { store } from "@/redux/store/store";
+import { AuthProvider } from "../context/AuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,11 +19,17 @@ const geistMono = Geist_Mono({
 
 function MyApp({ Component, pageProps }) {
   return (
-    <AuthProvider>
-      <div className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Component {...pageProps} />
-      </div>
-    </AuthProvider>
+    <Provider store={store}>
+      <AuthProvider>
+        <CartProvider>
+          <div
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+          >
+            <Component {...pageProps} />
+          </div>
+        </CartProvider>
+      </AuthProvider>
+    </Provider>
   );
 }
 

@@ -6,6 +6,9 @@ import { FaCartPlus, FaMemory, FaShoppingCart, FaUser } from "react-icons/fa";
 import { GoArrowSwitch } from "react-icons/go";
 import { BiMemoryCard } from "react-icons/bi";
 import { FiShoppingCart } from "react-icons/fi";
+import Cart from "@/pages/cart";
+import CartButton from "../add-to-cart/components/CartButton";
+import { useCart } from "../add-to-cart/components/CartContext";
 
 const menuItems = [
   { name: "Home", href: "/", color: "text-blue-500" },
@@ -21,7 +24,7 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeMenu, setActiveMenu] = useState("Home");
-
+  const { setIsOpen } = useCart();
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
@@ -43,7 +46,7 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed w-screen z-[9999] top-0 left-0 transition-all duration-300 ${
+      className={`fixed w-screen z-40 top-0 left-0 transition-all duration-300 ${
         scrolled ? "shadow-sm 2xl:py-12 bg-white py-4" : "bg-transparent"
       }`}
     >
@@ -112,7 +115,7 @@ export default function Navbar() {
             <FaUser className=" text-2xl cursor-pointer" />
           </div>
           <div className="flex p-3 gap-8">
-            <FiShoppingCart className="text-2xl cursor-pointer" />
+            <CartButton />
             <BiMemoryCard className="text-2xl cursor-pointer" />
 
             <GoArrowSwitch className=" text-2xl cursor-pointer" />
