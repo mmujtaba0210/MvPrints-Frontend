@@ -8,12 +8,13 @@ export const fetchCartItems = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("accessToken");
-      const { data } = await axios.get(`${BASE_URL}frontend/cart-items`, {
+      const res = await axios.get(`${BASE_URL}frontend/cart-items`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      return data.data;
+      console.log("first", res.data.data);
+      return res.data.data;
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message || "Failed to fetch cart items"

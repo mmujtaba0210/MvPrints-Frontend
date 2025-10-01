@@ -4,12 +4,22 @@ import { Product, useCart } from "./CartContext";
 import { X, Minus, Plus } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCartItems } from "../../../redux/slices/Cart/fetchCartSlice";
+import { deleteCartItem } from "@/redux/slices/Cart/deleteCartItemSlice";
+import toast from "react-hot-toast";
 export default function CartItem({ product }) {
   const { removeFromCart, addToCart, decreaseQuantity } = useCart();
   const dispatch = useDispatch();
-  useEffect(() => {
-    console.log("first", product);
-  }, []);
+
+  const handleDelete = async (product) => {
+    await dispatch(deleteCartItem(product.id))
+      .then(() => {
+        toast.success(`${product.product.name} deleted successfully!`);
+        dispatch(fetchCartItems());
+      })
+      .catch(() => {
+        toast.error("Failed to delete product from cart!");
+      });
+  };
 
   return (
     <div className="flex items-center justify-between border-b p-2">
@@ -45,7 +55,7 @@ export default function CartItem({ product }) {
           <Plus size={16} />
         </button>
         <button
-          onClick={() => removeFromCart(product.id)}
+          onClick={() => handleDelete(product)}
           className="ml-2 text-gray-500 hover:text-red-500 transition"
         >
           <X size={18} />

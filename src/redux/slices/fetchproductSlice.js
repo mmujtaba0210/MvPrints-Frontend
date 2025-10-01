@@ -12,7 +12,6 @@ export const fetchPrints = createAsyncThunk(
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
       });
-      console.log("Item", data.data);
 
       return data.data;
     } catch (error) {

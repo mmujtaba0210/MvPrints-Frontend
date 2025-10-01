@@ -1,14 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const BASE_URL = "{{base_url}}frontend/cart-items";
+const BASE_URL = "https://testbackend.mecarviprints.com/api/";
 
 export const deleteCartItem = createAsyncThunk(
   "cart/deleteCartItem",
   async (id, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("accessToken");
-      await axios.delete(`${BASE_URL}/${id}`, {
+      await axios.delete(`${BASE_URL}frontend/cart-items/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

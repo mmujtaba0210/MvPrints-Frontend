@@ -1,25 +1,36 @@
 "use client";
 import { useState } from "react";
 import React from "react";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/redux/slices/Cart/addCartSlice";
+import toast from "react-hot-toast";
+import { fetchCartItems } from "@/redux/slices/Cart/fetchCartSlice";
 
 export default function ProductCard({ product }) {
-  const [selectedSize, setSelectedSize] = useState(null);
+  const dispatch = useDispatch();
   const [added, setAdded] = useState(false);
 
   if (!product) return null;
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (product) => {
+    const formData = new FormData();
+    formData.append("product_id", product.id);
+    formData.append("quantity", 1);
+    formData.append("options[color]", "Red");
+    formData.append("options[size]", "XL");
+
+    dispatch(addToCart(formData))
+      .unwrap()
+      .then(() => {
+        toast.success("Product added to cart successfully!");
+        dispatch(fetchCartItems());
+      })
+      .catch(() => {
+        toast.error("Failed to add product to cart!");
+      });
+
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
-  };
-
-  const handleSizeClick = (size) => {
-    setSelectedSize(size);
-    setAdded(true);
-    setTimeout(() => {
-      setAdded(false);
-      setSelectedSize(null);
-    }, 2000);
   };
 
   return (
@@ -32,37 +43,14 @@ export default function ProductCard({ product }) {
           className="w-full h-56 object-cover rounded-t-xl"
         />
 
-        {/* Hover Add to Cart / Sizes */}
+        {/* Hover Add to Cart */}
         <div className="absolute bottom-3 left-0 right-0 flex justify-center opacity-0 group-hover:opacity-100 transition">
-          {Array.isArray(product?.sizes) && product.sizes.length > 0 ? (
-            <div className="flex gap-2 flex-wrap justify-center">
-              {product.sizes.map((size) => (
-                <button
-                  key={size}
-                  onClick={() => handleSizeClick(size)}
-                  className={`px-3 py-1 rounded-md border transition ${
-                    selectedSize === size
-                      ? "bg-purple-600 text-white"
-                      : "bg-white hover:bg-purple-100"
-                  }`}
-                >
-                  {size}
-                </button>
-              ))}
-              {added && selectedSize && (
-                <span className="text-green-600 font-semibold ml-2">
-                  Added!
-                </span>
-              )}
-            </div>
-          ) : (
-            <button
-              onClick={handleAddToCart}
-              className="px-4 py-2 rounded-lg bg-purple-600 text-white hover:bg-purple-700 transition"
-            >
-              {added ? "Added!" : "Add to Cart"}
-            </button>
-          )}
+          <button
+            onClick={() => handleAddToCart(product)}
+            className="px-4 py-2 rounded-lg bg-purple-600 text-white hover:bg-purple-700 transition"
+          >
+            {added ? "Added!" : "Add to Cart"}
+          </button>
         </div>
       </div>
 

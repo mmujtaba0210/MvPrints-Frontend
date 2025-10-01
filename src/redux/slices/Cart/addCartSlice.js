@@ -1,18 +1,23 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const BASE_URL = "{{base_url}}frontend/cart-items";
+const BASE_URL = "https://testbackend.mecarviprints.com/api/";
 
 export const addToCart = createAsyncThunk(
   "cart/addToCart",
   async (payload, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("accessToken");
-      const { data } = await axios.post(BASE_URL, payload, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const { data } = await axios.post(
+        `${BASE_URL}frontend/cart-items`,
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       return data;
     } catch (error) {
       return rejectWithValue(

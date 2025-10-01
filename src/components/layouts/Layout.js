@@ -8,6 +8,7 @@ import FooterSection from "./FooterSection";
 import Navbar from "./HeaderSection";
 import { CartProvider } from "../add-to-cart/components/CartContext";
 import CartSlider from "../add-to-cart/components/CartSlider";
+import { Toaster } from "react-hot-toast";
 
 export default function Layout({ children }) {
   const [servicesOpen, setServicesOpen] = useState(false);
@@ -63,6 +64,7 @@ export default function Layout({ children }) {
 
       <CartProvider>
         <main className="mt-10 lg:mt-22">{children}</main>
+        <Toaster position="top-right" reverseOrder={false} />
       </CartProvider>
 
       {/* Ticker Section */}

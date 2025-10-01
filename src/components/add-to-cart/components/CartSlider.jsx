@@ -8,21 +8,21 @@ import CartSuggestions from "./CartSuggestions";
 import CartTabs from "./CartTabs";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCartItems } from "@/redux/slices/Cart/fetchCartSlice";
+import toast from "react-hot-toast";
+import { clearCart } from "@/redux/slices/Cart/clearCartSlice";
 
 export default function CartSlider() {
   const [cartItem, setCartItem] = useState([]);
   const { isOpen, setIsOpen, cart } = useCart();
   const dispatch = useDispatch();
-  const items = useSelector((state) => state.fetchCart.items);
+  const { items } = useSelector((state) => state.fetchCart);
   useEffect(() => {
-    try {
-      dispatch(fetchCartItems());
-      console.log("Cart items:", items);
-      setCartItem(items);
-    } catch (error) {
-      console.log(error);
-    }
+    dispatch(fetchCartItems());
   }, [dispatch]);
+
+  useEffect(() => {
+    setCartItem(items);
+  }, [items]);
   return (
     <div
       className={`fixed inset-0 z-50 transition ${
@@ -63,6 +63,19 @@ export default function CartSlider() {
                 Congratulations! You’ve got free shipping!
               </p>
             </div>
+            <div
+              onClick={async () =>
+                await dispatch(clearCart())
+                  .then(() => {
+                    toast.success("Cart cleared successfully!");
+                    dispatch(fetchCartItems());
+                  })
+                  .catch(() => toast.error("Failed to clear cart!"))
+              }
+              className="flex justify-end px-4 py-2 bg-red-400 w-max text-white rounded ml-auto"
+            >
+              Clear all products
+            </div>
 
             {cartItem.length === 0 ? (
               <p className="text-sm p-2">
@@ -82,11 +95,8 @@ export default function CartSlider() {
                 <span>Subtotal</span>
                 <span>
                   $
-                  {cart
-                    .reduce(
-                      (sum, item) => sum + item.price * (item.quantity ?? 1),
-                      0
-                    )
+                  {cartItem
+                    .reduce((sum, item) => sum + item.total, 0)
                     .toFixed(2)}
                 </span>
               </p>
