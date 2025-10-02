@@ -11,6 +11,10 @@ export const fetchCartItems = createAsyncThunk(
       const res = await axios.get(`${BASE_URL}frontend/cart-items`, {
         headers: {
           Authorization: `Bearer ${token}`,
+          origin: [
+            "https://testfrontend.mecarviprints.com",
+            "http://localhost:3000",
+          ],
         },
       });
       console.log("first", res.data.data);

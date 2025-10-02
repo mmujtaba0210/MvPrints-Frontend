@@ -15,6 +15,10 @@ export const addToCart = createAsyncThunk(
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
+            origin: [
+              "https://testfrontend.mecarviprints.com",
+              "http://localhost:3000",
+            ],
           },
         }
       );

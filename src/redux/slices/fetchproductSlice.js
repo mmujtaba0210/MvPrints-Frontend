@@ -10,6 +10,10 @@ export const fetchPrints = createAsyncThunk(
       const { data } = await axios.get(`${baseUrl}admin/products/prints/list`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          origin: [
+            "https://testfrontend.mecarviprints.com",
+            "http://localhost:3000",
+          ],
         },
       });
 

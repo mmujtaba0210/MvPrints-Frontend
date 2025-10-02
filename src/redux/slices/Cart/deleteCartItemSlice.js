@@ -11,6 +11,10 @@ export const deleteCartItem = createAsyncThunk(
       await axios.delete(`${BASE_URL}frontend/cart-items/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
+           origin: [
+                      "https://testfrontend.mecarviprints.com",
+                      "http://localhost:3000",
+                    ],
         },
       });
       return id;
