@@ -4,18 +4,19 @@ import Image from "next/image";
 import { Menu, X } from "lucide-react";
 import { FaCartPlus, FaMemory, FaShoppingCart, FaUser } from "react-icons/fa";
 import { GoArrowSwitch } from "react-icons/go";
-import { BiMemoryCard } from "react-icons/bi";
+import { BiHeart, BiMemoryCard } from "react-icons/bi";
 import { FiShoppingCart } from "react-icons/fi";
 import Cart from "@/pages/cart";
 import CartButton from "../add-to-cart/components/CartButton";
 import { useCart } from "../add-to-cart/components/CartContext";
+import Link from "next/link";
 
 const menuItems = [
   { name: "Home", href: "/", color: "text-blue-500" },
-  { name: "Services", href: "/services" },
-  { name: "Our Products", href: "/portfolio" },
-  { name: "About us", href: "/about-us" },
-  { name: "Products", href: "#" },
+  {},
+  { name: "Our Products", href: "/dashboard" },
+  {},
+  {},
 ];
 
 const ACTIVE_MENU_KEY = "activeMenu";
@@ -65,14 +66,14 @@ export default function Navbar() {
         {/* Desktop Nav */}
         <div className="hidden lg:flex items-center relative justify-center flex-1 z-10">
           {!scrolled ? (
-            <div className="bg-white relative  rounded-b-[30px] rounded-t-[-50px] px-8 py-6 2xl:py-12 lg:px-12 2xl:px-18 rounded-outside">
-              <ul className="flex space-x-2 font-medium">
+            <div className="bg-white relative  rounded-b-[30px] rounded-t-[-50px] px-8 py-6 2xl:py-12 lg:px-12 2xl:px-1 rounded-outside">
+              <ul className="flex space-x-1 font-medium">
                 {menuItems.map((item, index) => (
                   <li key={index} className="relative group">
                     <a
                       href={item.href}
                       onClick={() => handleMenuClick(item.name)}
-                      className={`font-[500] px-4 text-[14px] 2xl:text-3xl  ${
+                      className={`font-[500] px-4 py-2 hover:text-white transition-all duration-500 rounded-full  hover:bg-[#FD02A9] text-[14px] 2xl:text-3xl  ${
                         item.color || "text-gray-800"
                       } ${
                         activeMenu === item.name
@@ -87,18 +88,16 @@ export default function Navbar() {
               </ul>
             </div>
           ) : (
-            <ul className="flex space-x-8 font-medium">
+            <ul className="flex space-x-2 font-medium">
               {menuItems.map((item, index) => (
                 <li key={index} className="relative group">
                   <a
                     href={item.href}
                     onClick={() => handleMenuClick(item.name)}
-                    className={`font-[500] px-4 text-[14px] 2xl:text-3xl ${
+                    className={`font-[500] px-4 py-2 hover:text-white transition-all duration-500 rounded-full  hover:bg-[#FD02A9] text-[14px] 2xl:text-3xl ${
                       item.color || "text-gray-800"
                     } ${
-                      activeMenu === item.name
-                        ? "text-white bg-[#FD02A9] transition-all duration-500 rounded-full py-2"
-                        : ""
+                      activeMenu === item.name ? "text-white bg-[#FD02A9] " : ""
                     }`}
                   >
                     {item.name}
@@ -112,13 +111,19 @@ export default function Navbar() {
         {/* Call to Action (Desktop) */}
         <section className="flex">
           <div className="border-r-1 py-3 px-5">
-            <FaUser className=" text-2xl cursor-pointer" />
+            <Link href="/dashboard">
+              {" "}
+              <FaUser className=" text-2xl cursor-pointer" />
+            </Link>
           </div>
-          <div className="flex p-3 gap-8">
+          <div className="flex p-3 gap-8 ">
             <CartButton />
-            <BiMemoryCard className="text-2xl cursor-pointer" />
-
-            <GoArrowSwitch className=" text-2xl cursor-pointer" />
+            <Link href="/wishlist">
+              <BiHeart className="text-2xl cursor-pointer" />
+            </Link>
+            <Link href="/compare">
+              <GoArrowSwitch className=" text-2xl cursor-pointer" />
+            </Link>
           </div>
         </section>
 

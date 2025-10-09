@@ -54,14 +54,11 @@ export default function CartSuggestions() {
             <img src={product.image} className="w-full rounded" />
             <p className="text-base mt-2 ">{product.title}</p>
 
-            {/* Animated price + add to cart */}
             <div className="absolute -bottom-7  left-0  text-center">
-              {/* Price */}
               <p className="text-base font-semibold transition-all duration-300 group-hover:translate-y-[-100%] group-hover:opacity-0">
                 ${product.price}
               </p>
 
-              {/* Add to cart text */}
               <button
                 onClick={() => addToCart(product)}
                 className="absolute  -translate-x- left-0 -top-1 text-base font-semibold   rounded  py-1 opacity-0 translate-y-[100%] transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 hover:underline w-max"

@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchCartItems } from "@/redux/slices/Cart/fetchCartSlice";
 import toast from "react-hot-toast";
 import { clearCart } from "@/redux/slices/Cart/clearCartSlice";
+import Link from "next/link";
 
 export default function CartSlider() {
   const [cartItem, setCartItem] = useState([]);
@@ -110,9 +111,12 @@ export default function CartSlider() {
                 </label>
               </div>
               <div className="flex gap-2 mt-7">
-                <button className="w-1/2 border border-black rounded p-4">
+                <Link
+                  href="/cart"
+                  className="w-1/2 border text-center border-black rounded p-4"
+                >
                   View Cart
-                </button>
+                </Link>
                 <button className="w-1/2 bg-black text-white rounded p-4">
                   Checkout
                 </button>

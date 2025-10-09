@@ -4,7 +4,11 @@ import CartPage from "@/views/cart/CartPage";
 import CartButton from "@/components/add-to-cart/components/CartButton";
 
 const Cart = () => {
-  return <CartButton></CartButton>;
+  return (
+    <Layout>
+      <CartPage />
+    </Layout>
+  );
 };
 
 export default Cart;

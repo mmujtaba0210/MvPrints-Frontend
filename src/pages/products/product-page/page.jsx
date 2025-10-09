@@ -8,6 +8,7 @@ const Sidebar = dynamic(() => import("../product-page/components/Sidebar"), {
   ssr: false,
 });
 import ProductsGrid from "./components/ProductsGrid";
+import Link from "next/link";
 
 export default function AllProductsPage() {
   const [view, setView] = useState(4);
@@ -74,7 +75,13 @@ export default function AllProductsPage() {
 
   return (
     <>
-      <h1 className="text-3xl font-bold my-2 mx-6">Our Products</h1>
+      <Link
+        href="/"
+        className=" bg-blue-500 text-white px-3 py-0.5 hover:scale-105 transition-all duration-500 rounded mx-6 "
+      >
+        Back to Home
+      </Link>
+      <h1 className="text-3xl font-bold my-5 mx-6">Our Products</h1>
       <div className="flex w-full min-h-screen">
         {/* Sidebar */}
         <aside className="w-[300px] hidden lg:block bg-white p-4">
