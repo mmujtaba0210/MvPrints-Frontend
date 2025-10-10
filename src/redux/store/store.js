@@ -8,6 +8,13 @@ import addCartReducer from "../slices/Cart/addCartSlice";
 import deleteCartItemReducer from "../slices/Cart/deleteCartItemSlice";
 import clearCartReducer from "../slices/Cart/clearCartSlice";
 
+//wishlist
+
+import fetchWishlistReducer from "../slices/Wishlist/fetchWishlistSlice";
+import createWishlistReducer from "../slices/Wishlist/createWishlistSlice";
+import deleteWishlistReducer from "../slices/Wishlist/deleteWishlistSlice";
+import clearAllWishlistReducer from "../slices/Wishlist/clearAllWishlistSlice";
+
 export const store = configureStore({
   reducer: {
     fetchProduct: fetchProductReducer,
@@ -18,6 +25,13 @@ export const store = configureStore({
     addCart: addCartReducer,
     deleteCartItem: deleteCartItemReducer,
     clearCart: clearCartReducer,
+
+    //wishlist
+
+    fetchWishlist: fetchWishlistReducer,
+    createWishlist: createWishlistReducer,
+    deleteWishlist: deleteWishlistReducer,
+    clearAllWishlist: clearAllWishlistReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

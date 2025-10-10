@@ -14,7 +14,7 @@ import Link from "next/link";
 const menuItems = [
   { name: "Home", href: "/", color: "text-blue-500" },
   {},
-  { name: "Our Products", href: "/dashboard" },
+  { name: "Our Products", href: "/products" },
   {},
   {},
 ];
