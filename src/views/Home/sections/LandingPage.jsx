@@ -1,9 +1,8 @@
 import React from "react";
-import HeaderSection from "@/components/layouts/HeaderSection";
 const LandingPage = () => {
   return (
     <main
-      className=" min-h-[100vh]  md:min-h-[80vh] xl:min-h-[110vh] bg-[url('/header/bg.png')]    bg-top bg-no-repeat  xl:rounded-br-[19rem] xl:rotate- overflow-hidden   relative
+      className=" min-h-[100vh]  md:min-h-[80vh] xl:min-h-[120vh] bg-[url('/header/bg.png')]    bg-top bg-no-repeat  xl:rounded-br-[19rem] xl:rotate- overflow-hidden    -translate-y-[10rem] relative
 "
     >
       <main className="md:flex gap-8 h-full  items-center mx-auto max-w-[290px] sm:max-w-[540px] md:max-w-[668px] lg:max-w-[924px] xl:max-w-[1180px] 2xl:max-w-[1436px]">

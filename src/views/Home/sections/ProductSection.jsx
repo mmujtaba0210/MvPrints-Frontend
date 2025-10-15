@@ -58,8 +58,8 @@ const featuredProducts = [
 const ProductSection = () => {
   const router = useRouter();
   return (
-    <section className="mt-15 w-full bg-gradient-to-bs from-[#0095ff]s to-whites bg-white">
-      <div className="mx-auto 2xl:my-18">
+    <section className=" w-full lg:-mt-40 bg-gradient-to-bs from-[#0095ff]s to-whites bg-white">
+      <div className="mx-auto ">
         <h2 className="text-3xl font-bold text-center text-[#fa09a7] 2xl:text-5xl">
           Our Products
         </h2>
