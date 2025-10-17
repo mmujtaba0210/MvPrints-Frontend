@@ -130,11 +130,10 @@ const AccountPanel = () => {
   const TabButton = ({ id, icon: Icon, label }) => (
     <button
       onClick={() => setActiveTab(id)}
-      className={`flex items-center gap-2 px-6 py-3 rounded-lg transition-all duration-300 ${
-        activeTab === id
+      className={`flex items-center gap-2 px-6 py-3 rounded-lg transition-all duration-300 ${activeTab === id
           ? "bg-[#0096ff] text-white shadow-md"
           : "text-gray-600 hover:bg-gray-100"
-      }`}
+        }`}
     >
       <Icon className="w-5 h-5" />
       <span className="font-medium">{label}</span>
@@ -242,16 +241,29 @@ const AccountPanel = () => {
           )}
           {activeTab === "password" && (
             <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {passwordFormData.map((data, index) => (
+              <div className="grid grid-cols-1 gap-4">
+                {/* Old Password takes full width */}
+                <FormField
+                  label="Old Password"
+                  placeholder="Enter your current password"
+                  type="password"
+                />
+
+                {/* New + Confirm Password on one row */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField
-                    key={index}
-                    label={data.label}
-                    placeholder={data.placeholder}
-                    type={data.type}
+                    label="New Password"
+                    placeholder="Enter new password"
+                    type="password"
                   />
-                ))}
+                  <FormField
+                    label="Confirm Password"
+                    placeholder="Confirm new password"
+                    type="password"
+                  />
+                </div>
               </div>
+
               <div className="flex justify-end mt-4 sm:mt-6">
                 <CustomButton
                   text="Change Password"
@@ -310,11 +322,10 @@ const AccountPanel = () => {
           {addresses.map((addr) => (
             <div
               key={addr.id}
-              className={`border rounded-md p-4 h-fit w-full cursor-pointer ${
-                selectedAddress === addr.id
+              className={`border rounded-md p-4 h-fit w-full cursor-pointer ${selectedAddress === addr.id
                   ? "border-[#0096ff] ring-2 ring-[#0096ff]"
                   : "border-gray-300"
-              }`}
+                }`}
               onClick={() => setSelectedAddress(addr.id)}
             >
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
@@ -407,9 +418,8 @@ const AccountPanel = () => {
             </h2>
 
             <div
-              className={`border-2 border-dashed rounded-xl p-6 sm:p-8 text-center ${
-                dragActive ? "border-[#0096ff] bg-blue-50" : "border-gray-300"
-              }`}
+              className={`border-2 border-dashed rounded-xl p-6 sm:p-8 text-center ${dragActive ? "border-[#0096ff] bg-blue-50" : "border-gray-300"
+                }`}
               onDragEnter={handleDrag}
               onDragLeave={handleDrag}
               onDragOver={handleDrag}
