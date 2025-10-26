@@ -64,7 +64,7 @@ export default function Layout({ children }) {
 
       <CartProvider>
         <main className="mt-10 lg:mt-22">{children}</main>
-        <Toaster position="top-right" reverseOrder={false} />
+        <Toaster position="bottom-right" reverseOrder={false} />
       </CartProvider>
 
       {/* Ticker Section */}

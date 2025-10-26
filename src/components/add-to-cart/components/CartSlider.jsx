@@ -73,9 +73,9 @@ export default function CartSlider() {
                   })
                   .catch(() => toast.error("Failed to clear cart!"))
               }
-              className="flex justify-end px-4 py-2 bg-red-400 w-max text-white rounded ml-auto"
+              className="flex cursor-pointer hover:bg-red-600 justify-end px-4 py-2 bg-red-400 w-max text-white rounded ml-auto"
             >
-              Clear all products
+              Clear All
             </div>
 
             {cartItem.length === 0 ? (

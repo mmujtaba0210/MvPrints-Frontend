@@ -36,7 +36,7 @@ const HomePage = () => {
     <>
       {/* landing page */}
       <LandingPage />
-      <div className=" mx-auto max-w-[350px] sd:max-w-[370px] 540:max-w-[480px] sm:max-w-[540px] md:max-w-[700px] lg:max-w-[900px] xl:max-w-[1150px] xlfor32 ">
+      <div className=" mx-auto max-w-[350px] sd:max-w-[370px] 540:max-w-[480px] sm:max-w-[540px] md:max-w-[700px] lg:max-w-[900px] xl:max-w-[1240px] xlfor32 ">
         {/* Featured Products Section */}
 
         <ProductSection />
@@ -63,49 +63,6 @@ const HomePage = () => {
 
         {/* Mobile App Section */}
         <MobileApp />
-        {/* Mecarvi Gold section
-        <section className="flex py-10 bg-[#efefef]">
-          <div className='w-[50%] h-[500px]'>
-            <img src='/images/DigitizingBanner.png' alt='' className='w-[77%]' />  
-          </div>  
-          <div className='w-[50%] h-[500px]'>
-              <div className="container mx-auto px-4 py-10 text-center">
-                <h2 className="text-3xl font-bold mb-4">Introducing Mecarvi Gold</h2>
-                <p className="text-lg mb-6">
-                  Empower your business with the Mecarvi Gold Card — the ultimate financial tool designed to help you grow, save, and succeed. Our exclusive card offers unparalleled benefits tailored to meet the needs of modern businesses.
-                </p>
-                <ul className="text-left mx-auto mb-6 space-y-2">
-                  <li className="flex items-center">
-                    <span className="text-blue-600 mr-2">✔</span> Earn Triple Rewards Points
-                  </li>
-                  <li className="flex items-center">
-                    <span className="text-blue-600 mr-2">✔</span> Build Business Credit
-                  </li>
-                  <li className="flex items-center">
-                    <span className="text-blue-600 mr-2">✔</span> Free Expedited Shipping
-                  </li>
-                  <li className="flex items-center">
-                    <span className="text-blue-600 mr-2">✔</span> Exclusive Discounts and Offers
-                  </li>
-                  <li className="flex items-center">
-                    <span className="text-blue-600 mr-2">✔</span> Flexible Payment Options
-                  </li>
-                  <li className="flex items-center">
-                    <span className="text-blue-600 mr-2">✔</span> Employee Card Benefits
-                  </li>
-                  <li className="flex items-center">
-                    <span className="text-blue-600 mr-2">✔</span> No Hidden Fees
-                  </li>
-                  <li className="flex items-center">
-                    <span className="text-blue-600 mr-2">✔</span> Dedicated Customer Support
-                  </li>
-                </ul>
-                <button className="bg-[#008cff] text-white px-8 py-3 rounded-full font-bold hover:bg-[#0096ff] transition-colors">
-                  Learn More
-                </button>
-              </div>
-          </div>  
-        </section> */}
       </div>
     </>
   );
