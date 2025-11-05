@@ -272,11 +272,10 @@ const AccountPanel = () => {
   const TabButton = ({ id, icon: Icon, label }) => (
     <button
       onClick={() => setActiveTab(id)}
-      className={`flex items-center gap-2 px-6 py-3 rounded-lg transition-all duration-300 ${
-        activeTab === id
+      className={`flex items-center gap-2 px-6 py-3 rounded-lg transition-all duration-300 ${activeTab === id
           ? "bg-[#0096ff] text-white shadow-md"
           : "text-gray-600 hover:bg-gray-100"
-      }`}
+        }`}
     >
       <Icon className="w-5 h-5" />
       <span className="font-medium">{label}</span>
@@ -427,33 +426,28 @@ const AccountPanel = () => {
           {activeTab === "password" && (
             <>
               <div className="grid grid-cols-1 gap-4">
-                {/* Old Password - Full width */}
+                {/* Old Password takes full width */}
                 <FormField
                   label="Old Password"
                   placeholder="Enter your current password"
                   type="password"
-                  value={passwordForm.old_password}
-                  onChange={(e) => handlePasswordFormChange("old_password", e.target.value)}
                 />
-                
-                {/* New Password and Confirm Password in one line */}
+
+                {/* New + Confirm Password on one row */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField
                     label="New Password"
                     placeholder="Enter new password"
                     type="password"
-                    value={passwordForm.new_password}
-                    onChange={(e) => handlePasswordFormChange("new_password", e.target.value)}
                   />
                   <FormField
                     label="Confirm Password"
                     placeholder="Confirm new password"
                     type="password"
-                    value={passwordForm.confirm_password}
-                    onChange={(e) => handlePasswordFormChange("confirm_password", e.target.value)}
                   />
                 </div>
               </div>
+
               <div className="flex justify-end mt-4 sm:mt-6">
                 <CustomButton
                   text={loading ? "Updating..." : "Change Password"}
@@ -529,11 +523,10 @@ const AccountPanel = () => {
           {addresses.map((addr) => (
             <div
               key={addr.id}
-              className={`border rounded-md p-4 h-fit w-full cursor-pointer ${
-                selectedAddress === addr.id
+              className={`border rounded-md p-4 h-fit w-full cursor-pointer ${selectedAddress === addr.id
                   ? "border-[#0096ff] ring-2 ring-[#0096ff]"
                   : "border-gray-300"
-              }`}
+                }`}
               onClick={() => setSelectedAddress(addr.id)}
             >
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
@@ -626,9 +619,8 @@ const AccountPanel = () => {
             </h2>
 
             <div
-              className={`border-2 border-dashed rounded-xl p-6 sm:p-8 text-center ${
-                dragActive ? "border-[#0096ff] bg-blue-50" : "border-gray-300"
-              }`}
+              className={`border-2 border-dashed rounded-xl p-6 sm:p-8 text-center ${dragActive ? "border-[#0096ff] bg-blue-50" : "border-gray-300"
+                }`}
               onDragEnter={handleDrag}
               onDragLeave={handleDrag}
               onDragOver={handleDrag}
