@@ -29,7 +29,32 @@ const AccountPanel = () => {
   const [dragActive, setDragActive] = useState(false);
   const [isEditMode, setIsEditMode] = useState(false);
   const [selectedAddressData, setSelectedAddressData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [profileData, setProfileData] = useState(null);
   const fileInputRef = useRef(null);
+
+  const API_BASE_URL = "https://testbackend.mecarviprints.com/api/";
+  const TOKEN = "61|MWOZCtdsCwHuO9H5YYYcf7166EmrCbcE4ggLOJ74bc1808ac";
+
+  // Form states
+  const [generalForm, setGeneralForm] = useState({
+    name: "",
+    username: "",
+    email: "",
+    phone: ""
+  });
+  
+  const [passwordForm, setPasswordForm] = useState({
+    old_password: "",
+    new_password: "",
+    confirm_password: ""
+  });
+  
+  const [pinForm, setPinForm] = useState({
+    old_pin: "",
+    new_pin: "",
+    confirm_pin: ""
+  });
 
   const addresses = [
     {
@@ -65,59 +90,176 @@ const AccountPanel = () => {
     },
   ];
 
-  const generalFormData = [
-    {
-      label: "Full Name",
-      placeholder: "Andri Jokall",
-    },
-    {
-      label: "User Name",
-      placeholder: "abcd",
-    },
-    {
-      label: "Email",
-      placeholder: "andrijokall18@gmail.com",
-    },
-    {
-      label: "Phone Number",
-      placeholder: "+923048239545",
-    },
-  ];
+  // Fetch profile data
+  const fetchProfileData = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`${API_BASE_URL}customer/profile`, {
+        method: "GET",
+        headers: {
+          "Authorization": `Bearer ${TOKEN}`,
+          "Content-Type": "application/json",
+        },
+      });
 
-  const passwordFormData = [
-    {
-      label: "Old Password",
-      placeholder: "Enter your current password",
-      type: "password",
-    },
-    {
-      label: "New Password",
-      placeholder: "Enter new password",
-      type: "password",
-    },
-    {
-      label: "Confirm Password",
-      placeholder: "Confirm new password",
-      type: "password",
-    },
-  ];
-  const PinFromData = [
-    {
-      label: "Old Pin",
-      placeholder: "Enter your current Pin",
-      type: "password",
-    },
-    {
-      label: "New Pin",
-      placeholder: "Enter new Pin",
-      type: "password",
-    },
-    {
-      label: "Confirm Pin",
-      placeholder: "Confirm new Pin",
-      type: "password",
-    },
-  ];
+      if (response.ok) {
+        const result = await response.json();
+        if (result.status_code === 200) {
+          setProfileData(result.data);
+          setGeneralForm({
+            name: result.data.name || "",
+            username: result.data.username || "",
+            email: result.data.email || "",
+            phone: result.data.phone || ""
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching profile:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Update General Info
+  const updateGeneralInfo = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`${API_BASE_URL}customer/update-profile`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(generalForm),
+      });
+
+      const result = await response.json();
+      
+      if (result.status_code === 200) {
+        setProfileData(result.data);
+        alert("Profile updated successfully!");
+      } else {
+        alert("Failed to update profile");
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("Error updating profile");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Update Password
+  const updatePassword = async () => {
+    if (passwordForm.new_password !== passwordForm.confirm_password) {
+      alert("New password and confirm password don't match");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const response = await fetch(`${API_BASE_URL}customer/update-password`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          old_password: passwordForm.old_password,
+          new_password: passwordForm.new_password,
+          confirm_password: passwordForm.confirm_password
+        }),
+      });
+
+      const result = await response.json();
+      
+      if (result.status_code === 200) {
+        setPasswordForm({ old_password: "", new_password: "", confirm_password: "" });
+        alert("Password updated successfully!");
+      } else {
+        alert(result.message || "Failed to update password");
+      }
+    } catch (error) {
+      console.error("Error updating password:", error);
+      alert("Error updating password");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Update Pin
+  const updatePin = async () => {
+    if (pinForm.new_pin !== pinForm.confirm_pin) {
+      alert("New PIN and confirm PIN don't match");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const response = await fetch(`${API_BASE_URL}customer/update-pin`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${TOKEN}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          old_pin: pinForm.old_pin,
+          new_pin: pinForm.new_pin,
+          confirm_pin: pinForm.confirm_pin
+        }),
+      });
+
+      const result = await response.json();
+      
+      if (result.status_code === 200) {
+        setPinForm({ old_pin: "", new_pin: "", confirm_pin: "" });
+        alert("PIN updated successfully!");
+      } else {
+        alert(result.message || "Failed to update PIN");
+      }
+    } catch (error) {
+      console.error("Error updating PIN:", error);
+      alert("Error updating PIN");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Update Photo
+  const updatePhoto = async (file) => {
+    try {
+      setLoading(true);
+      const formData = new FormData();
+      formData.append("photo", file);
+
+      const response = await fetch(`${API_BASE_URL}customer/update-photo`, {
+        method: "POST",
+        headers: {
+          "Authorization": `Bearer ${TOKEN}`,
+        },
+        body: formData,
+      });
+
+      const result = await response.json();
+      
+      if (response.ok && result.status_code === 200) {
+        await fetchProfileData(); // Refresh profile data to get updated avatar
+        alert("Profile photo updated successfully!");
+      } else {
+        alert(result.message || "Failed to update photo");
+      }
+    } catch (error) {
+      console.error("Error updating photo:", error);
+      alert("Error updating photo");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProfileData();
+  }, []);
 
   useEffect(() => {
     const handleClick = () => setOpenMenuId(null);
@@ -164,6 +306,7 @@ const AccountPanel = () => {
       const reader = new FileReader();
       reader.onload = (e) => {
         setProfileImage(e.target.result);
+        updatePhoto(file); // Call API to update photo
         setIsUploadDialogOpen(false);
       };
       reader.readAsDataURL(file);
@@ -188,6 +331,27 @@ const AccountPanel = () => {
     setIsDialogOpen(true);
   };
 
+  const handleGeneralFormChange = (field, value) => {
+    setGeneralForm(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handlePasswordFormChange = (field, value) => {
+    setPasswordForm(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const handlePinFormChange = (field, value) => {
+    setPinForm(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
   return (
     <div className="grid grid-cols-1  2xl:grid-cols-2 gap-6 px-4 sm:px-6 py-6">
       {/* ===== Profile Section ===== */}
@@ -195,7 +359,7 @@ const AccountPanel = () => {
         {/* Avatar */}
         <div className="flex justify-center items-center mb-6 sm:mb-8 relative">
           <img
-            src={profileImage}
+            src={profileData?.avatar || profileImage}
             alt="avatar"
             className="w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 2xl:size-[12rem] rounded-full object-cover border-4 border-[#0096ff]"
           />
@@ -221,20 +385,40 @@ const AccountPanel = () => {
           {activeTab === "general" && (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {generalFormData.map((data, index) => (
-                  <FormField
-                    key={index}
-                    label={data.label}
-                    placeholder={data.placeholder}
-                    type={data.type || "text"}
-                  />
-                ))}
+                <FormField
+                  label="Full Name"
+                  placeholder="Enter your full name"
+                  value={generalForm.name}
+                  onChange={(e) => handleGeneralFormChange("name", e.target.value)}
+                />
+                <FormField
+                  label="User Name"
+                  placeholder="Enter username"
+                  value={generalForm.username}
+                  onChange={(e) => handleGeneralFormChange("username", e.target.value)}
+                />
+                <FormField
+                  label="Email"
+                  placeholder="Enter email address"
+                  type="email"
+                  value={generalForm.email}
+                  onChange={(e) => handleGeneralFormChange("email", e.target.value)}
+                />
+                <FormField
+                  label="Phone Number"
+                  placeholder="Enter phone number"
+                  type="tel"
+                  value={generalForm.phone}
+                  onChange={(e) => handleGeneralFormChange("phone", e.target.value)}
+                />
               </div>
               <div className="flex justify-end mt-4 sm:mt-6">
                 <CustomButton
-                  text="Update Profile"
+                  text={loading ? "Updating..." : "Update Profile"}
                   width="fit"
                   className="px-4 sm:px-6 2xl:text-2xl"
+                  onClick={updateGeneralInfo}
+                  disabled={loading}
                 />
               </div>
             </>
@@ -266,9 +450,11 @@ const AccountPanel = () => {
 
               <div className="flex justify-end mt-4 sm:mt-6">
                 <CustomButton
-                  text="Change Password"
+                  text={loading ? "Updating..." : "Change Password"}
                   width="full sm:w-1/3 lg:w-1/4"
                   className="px-4 sm:px-6 2xl:text-2xl"
+                  onClick={updatePassword}
+                  disabled={loading}
                 />
               </div>
             </>
@@ -276,20 +462,35 @@ const AccountPanel = () => {
           {activeTab === "pin" && (
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {PinFromData.map((data, index) => (
-                  <FormField
-                    key={index}
-                    label={data.label}
-                    placeholder={data.placeholder}
-                    type={data.type}
-                  />
-                ))}
+                <FormField
+                  label="Old Pin"
+                  placeholder="Enter your current Pin"
+                  type="password"
+                  value={pinForm.old_pin}
+                  onChange={(e) => handlePinFormChange("old_pin", e.target.value)}
+                />
+                <FormField
+                  label="New Pin"
+                  placeholder="Enter new Pin"
+                  type="password"
+                  value={pinForm.new_pin}
+                  onChange={(e) => handlePinFormChange("new_pin", e.target.value)}
+                />
+                <FormField
+                  label="Confirm Pin"
+                  placeholder="Confirm new Pin"
+                  type="password"
+                  value={pinForm.confirm_pin}
+                  onChange={(e) => handlePinFormChange("confirm_pin", e.target.value)}
+                />
               </div>
               <div className="flex justify-end mt-4 sm:mt-6">
                 <CustomButton
-                  text="Change Pin"
+                  text={loading ? "Updating..." : "Change Pin"}
                   width="full sm:w-1/3 lg:w-1/4"
                   className="px-4 sm:px-6 2xl:text-2xl"
+                  onClick={updatePin}
+                  disabled={loading}
                 />
               </div>
             </>

@@ -1,6 +1,6 @@
-import ComparePage from '@/views/compare'
-import React from 'react'
-import Layout from '@/components/layouts/Layout'
+import ComparePage from "@/views/compare";
+import React from "react";
+import Layout from "@/components/layouts/Layout";
 
 const index = () => {
   return (
@@ -12,4 +12,4 @@ const index = () => {
   );
 };
 
-export default index
+export default index;

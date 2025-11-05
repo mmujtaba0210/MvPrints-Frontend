@@ -19,18 +19,19 @@ export default function ProductCard({ product }) {
     formData.append("options[color]", "Red");
     formData.append("options[size]", "XL");
 
+    setAdded(true);
     dispatch(addToCart(formData))
       .unwrap()
       .then(() => {
         toast.success("Product added to cart successfully!");
-        dispatch(fetchCartItems());
+        return dispatch(fetchCartItems());
       })
       .catch(() => {
         toast.error("Failed to add product to cart!");
+      })
+      .finally(() => {
+        setAdded(false);
       });
-
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
   };
 
   return (
@@ -47,9 +48,11 @@ export default function ProductCard({ product }) {
         <div className="absolute bottom-3 left-0 right-0 flex justify-center opacity-0 group-hover:opacity-100 transition">
           <button
             onClick={() => handleAddToCart(product)}
-            className="px-4 py-2 rounded-lg bg-purple-600 text-white hover:bg-purple-700 transition"
+            className={`px-4 py-2 rounded-lg bg-purple-600 text-white hover:bg-purple-700 transition ${
+              added ? "cursor-progress" : "cursor-pointer"
+            }`}
           >
-            {added ? "Added!" : "Add to Cart"}
+            {added ? "Adding..." : "Add to Cart"}
           </button>
         </div>
       </div>

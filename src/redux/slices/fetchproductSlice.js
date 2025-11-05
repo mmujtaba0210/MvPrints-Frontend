@@ -7,7 +7,7 @@ export const fetchPrints = createAsyncThunk(
   "prints/fetchPrints",
   async (_, { rejectWithValue }) => {
     try {
-      const { data } = await axios.get(`${baseUrl}admin/products/prints/list`, {
+      const res = await axios.get(`${baseUrl}frontend/products`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           origin: [
@@ -17,7 +17,7 @@ export const fetchPrints = createAsyncThunk(
         },
       });
 
-      return data.data;
+      return res.data.data.records;
     } catch (error) {
       return rejectWithValue(
         error.response?.data?.message || "Failed to fetch prints"
@@ -47,6 +47,7 @@ const fetchProductSlice = createSlice({
       })
       .addCase(fetchPrints.fulfilled, (state, action) => {
         state.loading = false;
+
         state.data = action.payload;
       })
       .addCase(fetchPrints.rejected, (state, action) => {

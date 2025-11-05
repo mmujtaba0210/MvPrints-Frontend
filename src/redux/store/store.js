@@ -15,6 +15,14 @@ import createWishlistReducer from "../slices/Wishlist/createWishlistSlice";
 import deleteWishlistReducer from "../slices/Wishlist/deleteWishlistSlice";
 import clearAllWishlistReducer from "../slices/Wishlist/clearAllWishlistSlice";
 
+//compare
+
+import fetchCompareProductsSlice from "../slices/Compare/fetchCompareProductsSlice";
+import postCompareProductsReducer from "../slices/Compare/CompareProductsSlice";
+
+//meagamenu
+import megaMenuReducer from "../slices/MegaMenu/fetchMegaMenuSlice";
+
 export const store = configureStore({
   reducer: {
     fetchProduct: fetchProductReducer,
@@ -32,9 +40,18 @@ export const store = configureStore({
     createWishlist: createWishlistReducer,
     deleteWishlist: deleteWishlistReducer,
     clearAllWishlist: clearAllWishlistReducer,
+
+    //compare
+
+    compareProducts: fetchCompareProductsSlice,
+    postCompareProducts: postCompareProductsReducer,
+
+    //megamanu
+
+    megaMenu: megaMenuReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false, // useful when handling non-serializable payloads
+      serializableCheck: false,
     }),
 });

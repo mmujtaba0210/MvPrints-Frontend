@@ -12,10 +12,11 @@ import Link from "next/link";
 
 export default function AllProductsPage() {
   const [view, setView] = useState(4);
+
   const [filters, setFilters] = useState({
     search: "",
     category: "",
-    price: [0, 160],
+    price: [0, 50000],
     color: "",
     rating: 0,
     tags: [],
@@ -26,9 +27,11 @@ export default function AllProductsPage() {
 
   // Fetch products on mount
   useEffect(() => {
+    console.log("Redux Products:", data);
+  }, [data]);
+  useEffect(() => {
     try {
       dispatch(fetchPrints());
-      console.log("Redux Products:", data);
     } catch (error) {
       console.log(error);
     }
